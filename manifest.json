@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+    "name": "Img-Capture",
+    "version": "1.0",
+
+    "description": "Captures images in a post",
+
+    "icons": {
+        "48": "icons/icon.png"
+    },
+
+    "permissions": [
+        "activeTab",
+        "downloads"
+    ],
+
+    "browser_action": {
+        "default_icon": "icons/icon.png",
+        "default_title": "Img Capture",
+        "default_popup": "popup/choose_action.html"
+    },
+
+    "background": {
+        "scripts": ["background_scripts/downloadimg.js"]
+    }
+}
