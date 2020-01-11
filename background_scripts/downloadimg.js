@@ -19,7 +19,7 @@ function getFullSizeUrl(){
 }
 
 function downloadImg(url) {
-    browser.downloads.download({url: url})
+    browser.downloads.download({url: url});
 }
 
 

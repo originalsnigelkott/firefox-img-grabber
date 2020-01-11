@@ -22,3 +22,12 @@ html, body {
 .action {
     background-color: honeydew;
 }
+
+.unavailable-option{
+    background-color: lightcoral;
+    text-decoration: line-through;
+}
+
+.highlighted{
+        background-color: green;
+}
