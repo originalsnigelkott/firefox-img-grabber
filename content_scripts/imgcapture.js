@@ -3,6 +3,7 @@
         return;
     };
     window.hasRun = true;
+    let mode;
 
     function listenForClicks() {
         document.addEventListener("click", (e) => {
