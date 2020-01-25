@@ -2,22 +2,8 @@ const menuOptions = ['Both', 'Normal', 'Full'];
 
 function listenForClicks() {
     document.addEventListener('click', (e) => {
-        function actionToExecute(action) {
-            switch(action) {
-                case 'Both': {
-                    return 'both';
-                }
-                case 'Normal': {
-                    return 'normal';
-                }
-                case 'Full': {
-                    return 'full';
-                }
-            }
-        }
-
         function sendMode() {
-            let action = actionToExecute(e.target.textContent);
+            let action = e.target.textContent.toLowerCase();
             browser.tabs.sendMessage(tabs[0].id, {
                 command: action
             });
@@ -32,8 +18,8 @@ function listenForClicks() {
         }
 
         function actionClicked() {
-            sendMode();
             highlightChoice();
+            sendMode();
         }
 
         function reportError(error) {
