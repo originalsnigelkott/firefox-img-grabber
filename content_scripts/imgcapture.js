@@ -8,7 +8,15 @@
     function listenForClicks() {
         document.addEventListener("click", (e) => {
             if(e.target.tagName === "IMG") {
-                captureNormalImg(e)
+                switch(mode){
+                    case 'both':
+                        break;
+                    case 'normal':
+                        captureNormalImg(e)
+                        break;
+                    case 'full':
+                        break;
+                }
             }
         });   
     }
