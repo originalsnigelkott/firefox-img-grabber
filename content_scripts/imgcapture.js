@@ -8,20 +8,12 @@
     function listenForClicks() {
         document.addEventListener("click", (e) => {
             if(e.target.tagName === "IMG") {
-                switch(mode){
-                    case 'both':
-                        break;
-                    case 'normal':
-                        captureNormalImg(e)
-                        break;
-                    case 'full':
-                        break;
-                }
+                captureImg(e)
             }
         });   
     }
 
-    function captureNormalImg(e) {
+    function captureImg(e) {
         let targetUrl = e.target.src;
         browser.runtime.sendMessage({url: targetUrl, size: mode});
     }
