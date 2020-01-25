@@ -3,8 +3,7 @@
         return;
     };
     window.hasRun = true;
-
-    let mode = "both";
+    let mode;
 
     function listenForClicks() {
         document.addEventListener("click", (e) => {
@@ -17,11 +16,16 @@
     function captureNormalImg(e) {
         let targetUrl = e.target.src;
         browser.runtime.sendMessage({url: targetUrl, size: mode});
-        console.log("Message sent");
-        console.log(mode);
+    }
+
+    function setMouseHoverIcon() {
+        let css = 'img:hover { cursor: grab; box-shadow: 0 0 5px red; }';
+        let sheet = window.document.styleSheets[0];
+        sheet.insertRule(css, sheet.cssRules.length)
     }
 
     window.onload = listenForClicks();
+    setMouseHoverIcon();
 
     browser.runtime.onMessage.addListener((message) => {
         mode = message.command;
