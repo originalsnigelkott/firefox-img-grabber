@@ -47,15 +47,10 @@ function reportExecuteScriptError(error) {
 }
 
 
-for (let i = 0; i < menuOptions.length; i++) {
+for (let option of menuOptions) {
     let div = document.createElement('div');
-    div.innerHTML = menuOptions[i];
+    div.innerHTML = option;
     div.classList.add('button', 'action');
-    if (menuOptions[i] === 'Normal') {
-        div.classList.add('button', 'action');
-    } else {
-        div.classList.add('button', 'action', 'unavailable-option')
-    }
     document.querySelector('#popup-content').appendChild(div);
 }
 browser.tabs.executeScript({file: '/content_scripts/imgcapture.js'})
