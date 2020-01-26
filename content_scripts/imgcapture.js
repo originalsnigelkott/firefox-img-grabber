@@ -16,14 +16,12 @@
     function captureImg(e) {
         let targetUrl = e.target.src;
         browser.runtime.sendMessage({url: targetUrl, size: mode});
-        console.log(`This is the mode sent: ${mode}`)
     }
 
     window.onload = listenForClicks();
     
     browser.runtime.onMessage.addListener((message) => {
         mode = message.command;
-        console.log(`This is the mode recived: ${mode}`)
     });
 }
 )();
