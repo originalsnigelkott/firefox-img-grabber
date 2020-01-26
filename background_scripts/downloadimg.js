@@ -1,8 +1,9 @@
 function handleMessage(message) {
     let url = message.url;
-    console.log
     switch(message.size) {
         case "both": {
+            downloadImg(url)
+            downloadImg(getFullSizeUrl(url));
             break;
         }
         case "normal": {
@@ -18,23 +19,11 @@ function handleMessage(message) {
 }
 
 function getFullSizeUrl(url){
+    let lastHyphenIndex = url.lastIndexOf('-');
+    let lastDotIndex = url.lastIndexOf('.');
     let urlAsArray = url.split('');
-    let lastHyphenIndex;
-    let lastDotIndex;
-    let isDotFound = false;
-    for(let i = urlAsArray.length - 1; i > 0; i--) {
-        if(urlAsArray[i] == '.' && !isDotFound) {
-            lastDotIndex = i;
-            isDotFound = true;
-        }
-        if(urlAsArray[i] == '-') {
-            lastHyphenIndex = i;
-            break;
-        }
-    }
-    urlAsArray = uralAsArray.splice(lastHyphenIndex, lastDotIndex - lastHyphenIndex);
-    let newUrl = urlAsArray.toString();
-    return newUrl;
+    urlAsArray.splice(lastHyphenIndex, (lastDotIndex - lastHyphenIndex));
+    return urlAsArray.join('');
 }
 
 function downloadImg(url) {
