@@ -1,4 +1,4 @@
-const menuOptions = ['Both', 'Normal', 'Full'];
+const menuOptions = ['Both', 'Normal', 'Full', 'Reset'];
 const imgHoverEffects = 'img:hover { cursor: grab; box-shadow: 0 0 5px green; }'
 
 function listenForClicks() {
@@ -19,7 +19,7 @@ function listenForClicks() {
         }
 
         function injectCSS() {
-            browser.tabs.insertCSS({code: imgHoverEffects})
+            browser.tabs.insertCSS({code: imgHoverEffects});
         }
 
         function actionClicked() {
@@ -27,15 +27,23 @@ function listenForClicks() {
             injectCSS();
             sendMode();
         }
+        function reset(){
+            browser.tabs.removeCSS({code: imgHoverEffects})
+        }
 
         function reportError(error) {
             console.error(`Could not send mode: ${error}`);
         }
 
         if (e.target.classList.contains('action')) {
-            browser.tabs.query({active: true, currentWindow: true})
-            .then(actionClicked)
-            .catch(reportError);
+            if(e.target.innerHTML !== 'Reset'){
+                browser.tabs.query({active: true, currentWindow: true})
+                .then(actionClicked)
+                .catch(reportError);
+            } else {
+                browser.tabs.query({active: true, currentWindow: true})
+                .then(reset)
+            }
         }
     });
 }
