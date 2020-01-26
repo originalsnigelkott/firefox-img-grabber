@@ -8,7 +8,7 @@
     function listenForClicks() {
         document.addEventListener("click", (e) => {
             if(e.target.tagName === "IMG") {
-                captureImg(e)
+                captureImg(e);
             }
         });   
     }
@@ -16,6 +16,7 @@
     function captureImg(e) {
         let targetUrl = e.target.src;
         browser.runtime.sendMessage({url: targetUrl, size: mode});
+        console.log(`This is the mode sent: ${mode}`)
     }
 
     function setMouseHoverIcon() {
@@ -29,6 +30,7 @@
 
     browser.runtime.onMessage.addListener((message) => {
         mode = message.command;
+        console.log(`This is the mode recived: ${mode}`)
     });
 }
 )();
