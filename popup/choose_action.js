@@ -1,4 +1,5 @@
 const menuOptions = ['Both', 'Normal', 'Full'];
+const imgHoverEffects = 'img:hover { cursor: grab; box-shadow: 0 0 5px green; }'
 
 function listenForClicks() {
     document.addEventListener('click', (e) => {
@@ -17,8 +18,13 @@ function listenForClicks() {
             e.target.classList.add('highlighted');
         }
 
+        function injectCSS() {
+            browser.tabs.insertCSS({code: imgHoverEffects})
+        }
+
         function actionClicked() {
             highlightChoice();
+            injectCSS();
             sendMode();
         }
 
