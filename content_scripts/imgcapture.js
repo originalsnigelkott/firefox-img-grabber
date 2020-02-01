@@ -8,12 +8,12 @@
     function listenForClicks() {
         document.addEventListener("click", (e) => {
             if(e.target.tagName === "IMG") {
-                captureNormalImg(e)
+                captureImg(e);
             }
         });   
     }
 
-    function captureNormalImg(e) {
+    function captureImg(e) {
         let targetUrl = e.target.src;
         browser.runtime.sendMessage({url: targetUrl, size: mode});
     }

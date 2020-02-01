@@ -1,21 +1,29 @@
 function handleMessage(message) {
+    let url = message.url;
     switch(message.size) {
         case "both": {
+            downloadImg(url)
+            downloadImg(getFullSizeUrl(url));
             break;
         }
         case "normal": {
-            downloadImg(message.url)
+            downloadImg(url)
             break;
         }
         case "full": {
+            downloadImg(getFullSizeUrl(url));
             break;
         }
     }
     browser.downloads.download({url: message.url})
 }
 
-function getFullSizeUrl(){
-
+function getFullSizeUrl(url){
+    let lastHyphenIndex = url.lastIndexOf('-');
+    let lastDotIndex = url.lastIndexOf('.');
+    let urlAsArray = url.split('');
+    urlAsArray.splice(lastHyphenIndex, (lastDotIndex - lastHyphenIndex));
+    return urlAsArray.join('');
 }
 
 function downloadImg(url) {
@@ -24,5 +32,3 @@ function downloadImg(url) {
 
 
 browser.runtime.onMessage.addListener(handleMessage);
-
-//66 ska med
