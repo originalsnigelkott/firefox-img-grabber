@@ -11,11 +11,14 @@ function listenForClicks() {
         }
 
         function highlightChoice() {
-            let popupContent = document.querySelector('#popup-content').children;
-            for(let i = 0; i < popupContent.length; i++) {
-                popupContent[i].classList.remove('highlighted');
-            }
             e.target.classList.add('highlighted');
+        }
+
+        function removeHighlights() {
+            let buttons = document.querySelectorAll('.button')
+            buttons.forEach( function(button) {
+                button.classList.remove('highlighted')
+            })
         }
 
         function injectCSS() {
@@ -23,12 +26,14 @@ function listenForClicks() {
         }
 
         function actionClicked(tabs) {
+            removeHighlights();
             highlightChoice();
             injectCSS();
             sendCommand(tabs);
         }
         function reset(tabs){
             browser.tabs.removeCSS({code: imgHoverEffects});
+            removeHighlights();
             sendCommand(tabs);
         }
 
