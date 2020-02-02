@@ -4,9 +4,13 @@
     };
     window.hasRun = true;
     let mode;
+    let isListeningForClicks = false;
 
     function listenForClicks() {
-        document.addEventListener("click", clickHandler);   
+        if (!isListeningForClicks) {
+            document.addEventListener("click", clickHandler);
+            isListeningForClicks = true; 
+        }
     }
 
     function clickHandler(e) {
@@ -17,19 +21,18 @@
 
     function removeListenForClicks() {
         document.removeEventListener("click", clickHandler);
-        console.log("listener removed")
+        isListeningForClicks = false;
     }
 
     function captureImg(e) {
         let targetUrl = e.target.src;
         browser.runtime.sendMessage({url: targetUrl, size: mode});
     }
-
-    window.onload = listenForClicks();
     
     browser.runtime.onMessage.addListener((message) => {
         if(message.command !== 'reset') {
             mode = message.command;
+            listenForClicks()
         } else if(message.command === 'reset') {
             removeListenForClicks();
         }        
