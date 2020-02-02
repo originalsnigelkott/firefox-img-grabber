@@ -3,7 +3,7 @@ const imgHoverEffects = 'img:hover { cursor: grab; box-shadow: 0 0 5px green; }'
 
 function listenForClicks() {
     document.addEventListener('click', (e) => {
-        function sendMode(tabs) {
+        function sendCommand(tabs) {
             let action = e.target.textContent.toLowerCase();
             browser.tabs.sendMessage(tabs[0].id, {
                 command: action
@@ -25,10 +25,11 @@ function listenForClicks() {
         function actionClicked(tabs) {
             highlightChoice();
             injectCSS();
-            sendMode(tabs);
+            sendCommand(tabs);
         }
-        function reset(){
-            browser.tabs.removeCSS({code: imgHoverEffects})
+        function reset(tabs){
+            browser.tabs.removeCSS({code: imgHoverEffects});
+            sendCommand(tabs);
         }
 
         function reportError(error) {
