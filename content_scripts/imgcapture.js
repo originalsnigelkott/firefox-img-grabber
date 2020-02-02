@@ -6,11 +6,18 @@
     let mode;
 
     function listenForClicks() {
-        document.addEventListener("click", (e) => {
-            if(e.target.tagName === "IMG") {
-                captureImg(e);
-            }
-        });   
+        document.addEventListener("click", clickHandler);   
+    }
+
+    function clickHandler(e) {
+        if(e.target.tagName === "IMG") {
+            captureImg(e);
+        }
+    }
+
+    function removeListenForClicks() {
+        document.removeEventListener("click", clickHandler);
+        console.log("listener removed")
     }
 
     function captureImg(e) {
@@ -21,7 +28,11 @@
     window.onload = listenForClicks();
     
     browser.runtime.onMessage.addListener((message) => {
-        mode = message.command;
+        if(message.command !== 'reset') {
+            mode = message.command;
+        } else if(message.command === 'reset') {
+            removeListenForClicks();
+        }        
     });
 }
 )();
