@@ -1,9 +1,9 @@
-const menuOptions = ['Both', 'Normal', 'Full'];
+const menuOptions = ['Both', 'Normal', 'Full', 'Reset'];
 const imgHoverEffects = 'img:hover { cursor: grab; box-shadow: 0 0 5px green; }'
 
 function listenForClicks() {
     document.addEventListener('click', (e) => {
-        function sendMode(tabs) {
+        function sendCommand(tabs) {
             let action = e.target.textContent.toLowerCase();
             browser.tabs.sendMessage(tabs[0].id, {
                 command: action
@@ -11,21 +11,30 @@ function listenForClicks() {
         }
 
         function highlightChoice() {
-            let popupContent = document.querySelector('#popup-content').children;
-            for(let i = 0; i < popupContent.length; i++) {
-                popupContent[i].classList.remove('highlighted');
-            }
             e.target.classList.add('highlighted');
         }
 
+        function removeHighlights() {
+            let buttons = document.querySelectorAll('.button')
+            buttons.forEach( function(button) {
+                button.classList.remove('highlighted')
+            })
+        }
+
         function injectCSS() {
-            browser.tabs.insertCSS({code: imgHoverEffects})
+            browser.tabs.insertCSS({code: imgHoverEffects});
         }
 
         function actionClicked(tabs) {
+            removeHighlights();
             highlightChoice();
             injectCSS();
-            sendMode(tabs);
+            sendCommand(tabs);
+        }
+        function reset(tabs){
+            browser.tabs.removeCSS({code: imgHoverEffects});
+            removeHighlights();
+            sendCommand(tabs);
         }
 
         function reportError(error) {
@@ -33,9 +42,14 @@ function listenForClicks() {
         }
 
         if (e.target.classList.contains('action')) {
-            browser.tabs.query({active: true, currentWindow: true})
-            .then(actionClicked)
-            .catch(reportError);
+            if(e.target.innerHTML !== 'Reset'){
+                browser.tabs.query({active: true, currentWindow: true})
+                .then(actionClicked)
+                .catch(reportError);
+            } else {
+                browser.tabs.query({active: true, currentWindow: true})
+                .then(reset)
+            }
         }
     });
 }
@@ -47,15 +61,10 @@ function reportExecuteScriptError(error) {
 }
 
 
-for (let i = 0; i < menuOptions.length; i++) {
+for (let option of menuOptions) {
     let div = document.createElement('div');
-    div.innerHTML = menuOptions[i];
+    div.innerHTML = option;
     div.classList.add('button', 'action');
-    if (menuOptions[i] === 'Normal') {
-        div.classList.add('button', 'action');
-    } else {
-        div.classList.add('button', 'action', 'unavailable-option')
-    }
     document.querySelector('#popup-content').appendChild(div);
 }
 browser.tabs.executeScript({file: '/content_scripts/imgcapture.js'})
