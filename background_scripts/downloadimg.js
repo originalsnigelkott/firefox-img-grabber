@@ -15,7 +15,6 @@ function handleMessage(message) {
             break;
         }
     }
-    browser.downloads.download({url: message.url})
 }
 
 function getFullSizeUrl(url){
