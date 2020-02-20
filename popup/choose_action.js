@@ -1,5 +1,5 @@
 const menuOptions = ['Both', 'Normal', 'Full', 'Reset'];
-const imgHoverEffects = 'img:hover { cursor: grab; box-shadow: 0 0 5px green; }'
+const imgHoverEffects = 'img:hover { cursor: grab; box-shadow: 0 0 10px 10px green; }'
 
 function listenForClicks() {
     document.addEventListener('click', (e) => {
