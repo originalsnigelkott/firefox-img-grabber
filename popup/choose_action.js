@@ -30,11 +30,13 @@ function listenForClicks() {
             highlightChoice();
             injectCSS();
             sendCommand(tabs);
+            window.close();
         }
         function reset(tabs){
             browser.tabs.removeCSS({code: imgHoverEffects});
             removeHighlights();
             sendCommand(tabs);
+            window.close();
         }
 
         function reportError(error) {
